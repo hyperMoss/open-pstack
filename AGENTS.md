@@ -1,6 +1,6 @@
 # open-pstack
 
-This is Arjit Jaiswal's independently maintained distribution. Cursor is the content source; other ports are advisory sources of fixes.
+This is hyperMoss's personal fork of Arjit Jaiswal's distribution. Keep Arjit's plugin package and provider behavior. Track this fork's durable work in hyperMoss/open-pstack GitHub Issues. Cursor is the content source; other ports are advisory sources of fixes.
 
 Track all durable work in this repository's GitHub Issues. Do not create a parallel Linear queue. Read `UPSTREAM.md` before changing upstream-derived content.
 
@@ -12,9 +12,9 @@ Before opening a pull request, run the Bun tests, strict typecheck, static invar
 
 For changes to Open Pstack, invoke the project-local [verify-open-pstack skill](.agents/skills/verify-open-pstack/SKILL.md) before declaring the work complete, whether or not the user names it or uses poteto-mode. Read its feature map, run the recipes covering the affected behavior, and retain the evidence. Report blocked or unmapped paths as unverified; a CLI check does not replace installed-parent verification. For documentation or maintenance-only changes, use the maintenance evidence requirements below.
 
-Nothing merges, tags, releases, or rolls out until the exact candidate is installed and the changed behavior passes a live test from the real user surface in every affected harness. Unit tests, validators, source inspection, and self-reports do not satisfy this gate. Record the installed version, surface, action, and observed result in the pull request template. A pull request without that evidence remains a draft.
+Nothing merges, tags, releases, or rolls out until the exact candidate is installed and the changed behavior passes a live test from the real user surface in every affected harness. Unit tests, validators, source inspection, and self-reports do not satisfy this gate. Publish the installed version, surface, action, and observed result through the repository verifier in one evidence comment and a `live-gate` commit status on the exact candidate head. Every new head, including a queue-created head, needs a fresh run. A pull request without applicable evidence remains a draft. The verifier publishes evidence and statuses; it does not queue or merge.
 
-For documentation or maintenance-only changes, prove that the packaged plugin tree is unchanged and exercise the changed CLI or GitHub workflow. There is no affected parent installation in that case. Record the actual maintenance evidence instead of repeating unchanged provider tests.
+For documentation or maintenance-only changes, prove that the packaged plugin tree is unchanged and exercise the changed CLI or GitHub workflow. There is no affected parent installation in that case. Record the actual maintenance evidence instead of repeating unchanged provider tests; publish the exact-head no-runtime gate only after those checks pass.
 
 Do not add an implicit runtime timeout or a weaker-model fallback. The only permitted substitution is a saved `primary -> fallback` chain in the model sheet on a terminal outcome the sheet's `# fallback` policy authorizes (`usage-exhausted` only when no policy line is saved), per `plugins/pstack/skills/poteto-mode/references/provider-dispatch.md`; anything else remains a dropout.
 
@@ -30,8 +30,8 @@ For repository changes, carry the work through validation, public PR review, and
 
 1. Use `create-public-facing-pr` to publish a focused PR with a concise description and verification evidence. Keep unrelated changes in separate PRs.
 2. Request Copilot review and use `address-copilot-review` to assess every finding, verify and push appropriate fixes, publish replies, and resolve addressed threads. Confirm replies are submitted rather than pending. If Copilot is unavailable or quota-limited, record that fact; do not treat it as an approval or wait indefinitely.
-3. Run the project-local [verify-open-pstack skill](.agents/skills/verify-open-pstack/SKILL.md) against the final candidate. Complete the applicable installed-parent or maintenance checks above and record observed results in the PR. Revalidate behavior affected by review fixes.
-4. Once required checks and applicable validation pass and review findings are addressed, squash merge the PR using a server-enforced expected-head SHA. Verify the resulting merge into `main`.
+3. Run the project-local [verify-open-pstack skill](.agents/skills/verify-open-pstack/SKILL.md) against the final candidate. Complete the applicable installed-parent or maintenance checks above and publish the exact-head gate. Revalidate behavior affected by review fixes.
+4. Once `verify` and exact-head `live-gate` pass and review threads are resolved, let Mergify squash merge through the one-PR queue. If its update changes the head, rerun verification on that SHA. Workflow changes require an operator queue action. Do not bypass an unavailable queue; leave the PR unmerged and report the blocker. Verify the resulting merge into `main`.
 5. When the merge introduces a new plugin version on `main`, publish its matching GitHub tag and release as part of delivery without waiting for another user prompt. Follow [UPSTREAM.md's release procedure](UPSTREAM.md#publish-a-release), tag the verified merge checkpoint whose plugin tree matches the tested candidate, and verify the published tag target and release. Never move an existing tag. If publication is blocked, record the blocker and report the release as pending; merging alone does not complete delivery for a new version. Repository changes that leave the plugin package unchanged need no new version or tag.
 6. After merging and completing any required release publication, check linked issues, close those fully resolved by the PR, and verify their closed status on GitHub; report any issue left open to the user with the reason and remaining work.
 

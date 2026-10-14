@@ -116,7 +116,7 @@ python3 scripts/fork-maintenance.py check-ledger
 6. Bump the package version when packaged behavior changes. Update the `open-pstack version` row above, both plugin manifests, and `.claude-plugin/marketplace.json` together. `tests/skill-collision-repro.sh` checks that the four values match. `.agents/plugins/marketplace.json` has no version field.
 7. Add a `CHANGELOG.md` entry for the new version with its Cursor baseline and pull request.
 8. Run the checks in [CONTRIBUTING.md](CONTRIBUTING.md#validate-a-change). Install the exact candidate and test the changed behavior in every affected parent app, as [AGENTS.md](AGENTS.md) requires. Keep the pull request in draft until that evidence is recorded.
-9. Merge with a server-enforced expected-head guard after review findings are addressed and required checks pass.
+9. Deliver through this fork's exact-head `live-gate` and Mergify queue after review findings are addressed and required checks pass. See [AGENTS.md](AGENTS.md#default-delivery-workflow).
 
 Do not merge the original contribution pull requests in Eric's repository as part of this work. Consider new fixes from that repository separately.
 

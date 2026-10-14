@@ -22,7 +22,8 @@ To test an unreleased change, use a separate installation or a disposable worksp
 
 Read [AGENTS.md](AGENTS.md) and [UPSTREAM.md](UPSTREAM.md) before editing. Keep one shared skill tree for Codex and Claude Code. Preserve upstream licenses and credit. Record intentional differences from Cursor in the [decision ledger](maintenance/upstream-ledger.json). Each fact has one owner in the [documentation ownership](AGENTS.md#documentation-ownership) map. Update that owner and link to it from other pages.
 
-`main` requires pull requests and a passing `verify` check from GitHub Actions on a branch that is up to date with `main`. Repository administrators can bypass those requirements, including pushing directly to `main` or merging without updating the PR branch first. The **Allow force pushes** and **Allow deletions** settings remain disabled. External approvals are not required. The installed-parent evidence under [Validate a change](#validate-a-change) is maintainer policy, not a branch-protection gate.
+This personal fork requires pull requests, `verify`, and `live-gate` on the exact candidate head, plus resolved review threads. Mergify uses a one-PR squash queue. Every head produced by a queue update requires fresh verification. Install the Mergify GitHub App on `hyperMoss/open-pstack` and enable Merge Queue and Merge Protections; the configuration alone does not install the App. Keep force pushes and branch deletion disabled. See [AGENTS.md](AGENTS.md#default-delivery-workflow) for delivery policy.
+
 
 ## Development tools
 
@@ -36,7 +37,7 @@ Skill-authoring workflows in Claude Code use `plugin-dev:skill-development`. Ins
 
 Run the checks in [.github/workflows/ci.yml](.github/workflows/ci.yml): Bun tests, strict typechecking, maintenance tests, manifest parsing, documentation checks, and static invariants. Run `claude plugin validate ./plugins/pstack` for plugin validation and `python3 scripts/check-docs.py` for the documentation checks.
 
-For changes to packaged skills, agents, manifests, or runner behavior, install the exact candidate and exercise the changed behavior from every affected parent app. Record the installed version, action, observed result, and limits in the pull request. Keep the pull request in draft until that evidence is available. The [verify-open-pstack skill](.agents/skills/verify-open-pstack/SKILL.md) has recipes for each feature.
+For changes to packaged skills, agents, manifests, or runner behavior, install the exact candidate and exercise the changed behavior from every affected parent app. Record the installed version, action, observed result, and limits in the pull request. Keep the pull request in draft until that evidence is available. The shared [verify-open-pstack skill](.agents/skills/verify-open-pstack/SKILL.md) runs pinned native sessions and publishes the exact-head gate. Install its separate development dependencies with `bun install --frozen-lockfile --ignore-scripts` in `.claude/skills/verify-open-pstack/`. Its `manual/` recipes retain Arjit-specific verification paths that are not yet automated; those paths remain unverified by the automated gate.
 
 For documentation and maintenance tooling that leave the plugin tree unchanged, show that the tree is unchanged and demonstrate the changed command or workflow. Do not claim provider validation that was not needed or not performed.
 

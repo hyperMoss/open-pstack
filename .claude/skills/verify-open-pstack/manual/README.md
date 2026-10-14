@@ -1,8 +1,3 @@
----
-name: verify-open-pstack
-description: Verify Open Pstack through installed Codex and Claude Code skills and its shipped Bun CLIs. Use for real behavior proof, routing or setup changes, orchestration bookkeeping, and release evidence.
----
-
 # Verify Open Pstack
 
 Read [the feature map](features/README.md) first. The primary product is the installed Pstack workflow in Codex and Claude Code. The secondary surfaces are the shipped CLI tools. A CLI proof establishes only that CLI's behavior, never installed skill discovery, parent decisions, or model execution.

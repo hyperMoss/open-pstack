@@ -11,7 +11,10 @@ Closes #
 - [ ] Evidence below names the version or commit, action, and observed result.
 - [ ] Maintenance-only changes prove plugin-tree equality and exercise the changed CLI or workflow.
 
-Live evidence:
+Named verifier features (`--feature <harness>:<feature>`):
+
+
+Exact-head `live-gate` evidence comment:
 
 
 ## Documentation impact

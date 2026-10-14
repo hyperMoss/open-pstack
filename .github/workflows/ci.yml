@@ -28,6 +28,14 @@ jobs:
       - name: Typecheck
         working-directory: plugins/pstack/skills/poteto-mode/scripts
         run: bun run typecheck
+      - name: Install repository verifier
+        working-directory: .claude/skills/verify-open-pstack
+        run: bun install --frozen-lockfile --ignore-scripts
+      - name: Check repository verifier
+        working-directory: .claude/skills/verify-open-pstack
+        run: |
+          bun run test
+          bun run typecheck
       - name: Test fork maintenance
         run: python3 tests/test-fork-maintenance.py
       - name: Test session-start hook

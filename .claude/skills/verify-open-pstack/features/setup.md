@@ -1,0 +1,25 @@
+# Setup and model configuration
+
+## Sub-features
+
+Installed setup invocation, harness-to-provider mapping, generated routing/model preferences, unavailable-provider handling, and changed configuration references.
+
+## How to get to it (user POV)
+
+Invoke `/pstack:setup-pstack` in Claude or `$setup-pstack` in Codex. The installed instructions are the authority for setup inputs.
+
+## Driving it with verify-open-pstack
+
+For setup only, snapshot the operator's real `${CLAUDE_CONFIG_DIR:-$HOME/.claude}/pstack-models.md` and `CLAUDE.md` before invocation, preserving exact bytes and whether each file existed. Exercise every changed setup branch with explicit model/provider inputs. Retain the native transcript and generated configuration privately, then invoke a consuming installed skill to observe the configured route.
+
+Restore both files byte for byte afterwards, including restoring original absence, on success or failure. Verify restoration before any evidence comment or status publication. Restoration failure stops the run and publishes nothing. Retain snapshot and restoration results in the private mode-0700 evidence root through merge.
+
+## Gotchas
+
+Claude uses the operator's normal config/login; Codex uses a run-owned home with auth symlinked to the daily login. Do not redirect `HOME`, copy credentials, start login, or use a mock as setup proof. Generated configuration alone does not prove the consuming surface. Setup restoration is the only permitted temporary change to these daily Claude files.
+
+## Headless
+
+The setup recipe serves `setup` and `skill-invocation:setup-pstack`. It runs setup with explicit answers moving every model-family role to `claude:opus@high`, checks the written descriptors, then has `poteto-mode` consume a configured role. Its `first-run` case removes the sheet and the run-owned Codex mirror, then compares the written role lines with the installed Arjit setup defaults. The parent snapshots daily Claude files before the first session and restores and verifies them afterwards, including on failure.
+
+Subscription decisions, approved fallback chains, and additional setup branches remain covered by the [manual setup recipe](../manual/features/setup.md), not by these assertions. Do not approve those changes with an unrelated setup case.

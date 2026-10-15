@@ -20,7 +20,7 @@ Run the shipped `pstack-model-policy resolve` CLI for a named role, or invoke a 
 
 ## Driving it with the Bun CLI and parent apps
 
-Preconditions: Launch and Doctor passed. Set `VERIFY_MODEL_SHEET` to the approved frozen sheet for this run. Use the parent-supplied copy, or freeze the saved sheet from the location documented in [setup-pstack](../../../../plugins/pstack/skills/setup-pstack/SKILL.md) into the evidence directory. Do not assume the checkout's `AGENTS.md` contains model rows, invent assignments, or rewrite personal configuration. If no approved sheet is available, report the missing fixture. Read `plugins/pstack/skills/poteto-mode/references/provider-dispatch.md` before any live dispatch.
+Preconditions: Launch and Doctor passed. Set `VERIFY_MODEL_SHEET` to the approved frozen sheet for this run. Use the parent-supplied copy, or freeze the saved sheet from the location documented in [setup-pstack](../../../../../plugins/pstack/skills/setup-pstack/SKILL.md) into the evidence directory. Do not assume the checkout's `AGENTS.md` contains model rows, invent assignments, or rewrite personal configuration. If no approved sheet is available, report the missing fixture. Read `plugins/pstack/skills/poteto-mode/references/provider-dispatch.md` before any live dispatch.
 
 ```bash
 : "${VERIFY_MODEL_SHEET:?set the approved frozen model-sheet path}"
@@ -48,7 +48,7 @@ For a change to Claude output parsing, install the candidate in both parents and
 
 Expect `stream-json` and `--verbose` in argv, `modelVerified: true`, and `modelEvidence: "provider-report"`. The reported model must come from main assistant events. A real probe establishes execution; a synthetic stream fixture establishes rejection behavior. Keep those claims separate.
 
-From each installed parent, run the [synthetic boundary checks](../../../../tests/claude-primary-model/verify-fixtures.py) with `--runner` pointing at that parent's installed runner, `--parent` matching the parent, and a fresh `--evidence` directory. The fixture covers valid primary plus helper usage, requested model used only by a helper, usage-only output, and conflicting primary models. Rejected cases must leave no output file and preserve the terminal-success veto against replay. Failure receipts must omit the private transcript marker.
+From each installed parent, run the [synthetic boundary checks](../../../../../tests/claude-primary-model/verify-fixtures.py) with `--runner` pointing at that parent's installed runner, `--parent` matching the parent, and a fresh `--evidence` directory. The fixture covers valid primary plus helper usage, requested model used only by a helper, usage-only output, and conflicting primary models. Rejected cases must leave no output file and preserve the terminal-success veto against replay. Failure receipts must omit the private transcript marker.
 
 ### Codex completion evidence
 
@@ -89,6 +89,6 @@ An upstream 403, authentication failure, or unavailable model is a failed live t
 ## Gotchas
 
 - Resolve is read-only and launches no providers; it cannot prove authentication, spending controls, or successful execution.
-- Use the [provider dispatch route rules](../../../../plugins/pstack/skills/poteto-mode/references/provider-dispatch.md#native-lanes); same-provider identity alone does not establish a native Claude lane.
+- Use the [provider dispatch route rules](../../../../../plugins/pstack/skills/poteto-mode/references/provider-dispatch.md#native-lanes); same-provider identity alone does not establish a native Claude lane.
 - A missing fallback-policy line means quota-only recovery. Generic failure is not quota exhaustion.
 - Each real external attempt needs fresh output and receipt paths. Retain failed receipts and partial work; no implicit timeout or substitution is allowed.

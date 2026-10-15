@@ -1,0 +1,35 @@
+merge_queue:
+  max_parallel_checks: 1
+
+queue_rules:
+  - name: default
+    batch_size: 1
+    checks_timeout: null
+    merge_method: squash
+    queue_conditions:
+      - -draft
+      - check-success=verify
+      - check-success=live-gate
+      - "#review-threads-unresolved = 0"
+    merge_conditions: []
+
+merge_protections_settings:
+  auto_merge_conditions:
+    - base = main
+    - -files~=^\.github/
+
+merge_protections:
+  - name: Queue verified candidates
+    description: Require CI, an exact-head live gate, and resolved reviews before queuing.
+    if:
+      - base = main
+    success_conditions:
+      - -draft
+      - check-success=verify
+      - check-success=live-gate
+      - "#review-threads-unresolved = 0"
+
+commands_restrictions:
+  requeue:
+    conditions:
+      - sender-permission >= write

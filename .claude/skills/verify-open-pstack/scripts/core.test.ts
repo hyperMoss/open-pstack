@@ -27,6 +27,15 @@ export function evidence(r: Receipt): void {
 }
 
 describe('registry and ownership', () => {
+  test('migration keeps legacy verifier paths runtime after replacing the directory with an alias', () => {
+    for (const previous_filename of ['.agents/skills/verify-open-pstack/SKILL.md', '.agents/skills/verify-open-pstack/features/routing.md']) {
+      const selection = classify([{ filename: '.claude/skills/verify-open-pstack/manual/README.md', previous_filename }], registry);
+      expect(selection.noRuntime).toBe(false);
+      expect(selection.features).toEqual(['project-skill']);
+    }
+    expect(classify([{ filename: '.agents/skills/verify-open-pstack' }], registry).features).toEqual(['project-skill']);
+    expect(() => classify([{ filename: '.agents/skills/unreviewed-verifier/SKILL.md' }], registry)).toThrow('Unmapped path');
+  });
   test('all tracked plugin files are covered, including consumed markdown', () => {
     const root = resolve(import.meta.dir, '../../../..');
     const paths = execFileSync('git', ['ls-files', '-z', 'plugins/pstack', '.claude-plugin', '.agents/plugins'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);

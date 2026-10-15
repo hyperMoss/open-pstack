@@ -113,6 +113,7 @@
   "project": [
     ".claude/skills/verify-open-pstack/**",
     ".agents/skills/verify-open-pstack",
+    ".agents/skills/verify-open-pstack/**",
     "AGENTS.md",
     "tests/skill-collision-repro.sh",
     "CLAUDE.md",
